@@ -1,5 +1,4 @@
 # national-bank-of-Rwanda
 Applied AI Embeddings with Python using National Economic Reports
 
-![](file:///C:/Users/Leonce%20Nshuti/Downloads/What%20did%20Rwanda%20export%20in%202020.svg)
-
+![What did Rwanda export in 2020](https://user-images.githubusercontent.com/13305262/230755762-eb961208-bc6e-4e87-8950-35b9841016ce.png)
