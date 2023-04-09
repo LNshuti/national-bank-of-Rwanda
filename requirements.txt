@@ -1,0 +1,4 @@
+langchain 
+unstructured 
+openai 
+pandas 
