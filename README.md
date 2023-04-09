@@ -8,7 +8,7 @@ Applied AI Embeddings with Python using National Economic Reports
 ```bash 
 git clone https://github.com/LNshuti/national-bank-of-Rwanda.git
 
-cd national-bank-of-Rwanda
+cd national-bank-of-Rwanda/
 
 ```
 
