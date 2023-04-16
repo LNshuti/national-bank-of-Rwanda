@@ -62,3 +62,17 @@ bnr_report_reader_data = bnr_report_reader.load()
 
 ```
 
+
+```{r}
+if os.path.isfile('helper.py'):
+    import helper as h
+else:
+    print('importing `helper.py` from https://github.com/pinecone-io')
+    with httpimport.github_repo(
+        username='pinecone-io', 
+        repo='examples',
+        profile='semantic_text_search',
+        ref='master'):
+        from semantic_text_search import helper as h
+```
+
