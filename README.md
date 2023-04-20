@@ -19,14 +19,21 @@ A Pod AKA Shard allows scaling vectors.
 git clone https://github.com/LNshuti/national-bank-of-Rwanda.git
 
 cd national-bank-of-Rwanda/
-
 ```
 
 ## Install requirements 
 
+### Pip
 ```bash
 pip install -r requirements.txt
 ```
+
+### Conda
+```bash 
+conda env create --file=environment.yaml
+conda env config vars set OPENAI_API_KEY=YOUR_API_KEY
+```
+
 
 ## Import libraries
 
