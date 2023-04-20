@@ -23,11 +23,6 @@ cd national-bank-of-Rwanda/
 
 ## Install requirements 
 
-### Pip
-```bash
-pip install -r requirements.txt
-```
-
 ### Conda
 ```bash 
 conda env create --file=environment.yaml
