@@ -9,10 +9,6 @@ Openai
 
 Pinecone
 
-## Definitions
-
-A Pod AKA Shard allows scaling vectors. 
-
 ## Clone this repo to your machine
 
 ```bash 
