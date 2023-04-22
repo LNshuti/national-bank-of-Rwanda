@@ -85,13 +85,14 @@ index.add(pdf_emb)
 # Train the index
 index.train(pdf_emb)
 ```
+# Search the index for some questions
 
 ```{python}
-# Search the index for some questions
 questions = [
   "What are the key challenges that Rwanda faces this year?",
   "Summarize key metrics for Rwanda including the amount of reserves, federal direct investment, inflation, and average food prices"
 ]
+
 for question in questions:
   start_time = time.time()
   # Generate response using OpenAI
