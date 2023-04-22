@@ -3,11 +3,13 @@ Applied AI Embeddings with Python using National Economic Reports
 
 ## Tools Used 
 
-Python 
+* Python 
 
-Openai
+* Openai
 
-Pinecone
+* Pinecone
+
+* Langchain
 
 ## Clone this repo to your machine
 
@@ -29,13 +31,15 @@ conda env config vars set OPENAI_API_KEY=YOUR_API_KEY
 ## Import libraries
 
 ```python   
-from langchain.embeddings.openai import OpenAIEmbeddings 
-from langchain.text_splitter import CharacterTextSplitter 
-from langchain.vectorstores import ElasticVectorSearch, Pinecone, Weaviate
+import os
+import faiss
+from langchain.document_loaders import UnstructuredPDFLoader
+from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain import OpenAI, ConversationChain
+import time
 
-from langchain.document_loaders import UnstructuredPDFLoader, OnlinePDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+# Load OpenAI API key from environment
+openai_api_key = os.environ.get('OPENAI_API_KEY')
 ```
 
 
@@ -53,20 +57,55 @@ pinecone_api_key = os.environ.get('PINECONE_API_KEY')
 pinecone_api_env = os.environ.get('PINECONE_API_ENV')
 ```
 
-## Load Latest Annual Report
-```python
-bnr_report_reader = UnstructuredPDFLoader("data/Annual_Report_2021_22_Web_English_Versio.pdf")
-bnr_report_reader_data = bnr_report_reader.load()
+# Load PDF document
 
+```{python}
+pdf_loader = UnstructuredPDFLoader("data/Annual_Report_2021_22_Web_English_Versio.pdf")
+pdf_text = pdf_loader.load()
 ```
 
+# Initialize embeddings and language model
+```{python}
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
+conversation = ConversationChain(llm=llm, verbose=True)
+```
 
 ```{r}
-with httpimport.github_repo(
-    username='pinecone-io', 
-    repo='examples',
-    profile='semantic_text_search',
-    ref='master'):
-from semantic_text_search import helper as h
+# Get embeddings for PDF document
+start_time = time.time()
+pdf_emb = embeddings.embed(pdf_text)
+end_time = time.time()
+print(f"Embedding generation time: {end_time - start_time} seconds")
+
+# Build Faiss index with HNSW algorithm
+index = faiss.IndexHNSWFlat(pdf_emb.shape[1], 32)
+# Add PDF embeddings to index
+index.add(pdf_emb)
+# Train the index
+index.train(pdf_emb)
+```
+
+```{python}
+# Search the index for some questions
+questions = [
+  "What are the key challenges that Rwanda faces this year?",
+  "Summarize key metrics for Rwanda including the amount of reserves, federal direct investment, inflation, and average food prices"
+]
+for question in questions:
+  start_time = time.time()
+  # Generate response using OpenAI
+  response = conversation.generate_response(question).text
+  # Print response
+  print(f"Question: {question}")
+  print(f"Response: {response}")
+  # Get embeddings for response
+  response_emb = embeddings.embed(response)
+  # Search index for similar embeddings
+  D, I = index.search(response_emb, 5)
+  end_time = time.time()
+  # Print search results
+  print(f"Search results: {I}")
+  print(f"Search time: {end_time - start_time} seconds\n")
 ```
 
