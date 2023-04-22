@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Hide environment variables from git 
 .env
+
+# Detectron
+/detectron2
