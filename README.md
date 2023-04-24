@@ -109,4 +109,20 @@ for question in questions:
   print(f"Search results: {I}")
   print(f"Search time: {end_time - start_time} seconds\n")
 ```
+# Weaviate
 
+```{python}
+import weaviate
+from weaviate.embedded import EmbeddedOptions
+
+client = weaviate.Client(
+  embedded_options=EmbeddedOptions()
+)
+
+data_obj = {
+  "name": "Chardonnay",
+  "description": "Goes with fish"
+}
+
+client.data_object.create(data_obj, "Wine")
+```
